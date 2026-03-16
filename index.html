@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foot Fit Finder</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0f1117;
+      --surface:    #1a1d27;
+      --border:     #2a2d3a;
+      --text:       #e8eaf0;
+      --muted:      #6b7280;
+      --dim:        #4b5563;
+      --green:      #22c55e;
+      --amber:      #f59e0b;
+      --red:        #ef4444;
+      --green-bg:   #0d2a1a;
+      --amber-bg:   #2a1f0a;
+      --red-bg:     #2a0d0d;
+      --likely-bg:  #1f1f0a;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── Header ──────────────────────────────────────────────────────────── */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.1rem 2rem;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+    }
+
+    header h1 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    header p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── Layout ──────────────────────────────────────────────────────────── */
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: calc(100vh - 53px - 160px);
+    }
+
+    /* ── Left panel ──────────────────────────────────────────────────────── */
+    .left {
+      border-right: 1px solid var(--border);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .panel-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .input-group label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .input-row input {
+      flex: 1;
+      background: #12151f;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 1.6rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      padding: 0.4rem 0.75rem;
+      outline: none;
+      transition: border-color 0.15s;
+      -moz-appearance: textfield;
+    }
+
+    .input-row input::-webkit-outer-spin-button,
+    .input-row input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+    .input-row input:focus { border-color: var(--muted); }
+
+    .input-unit {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Width category pills */
+    .width-cats {
+      display: flex;
+      gap: 0.3rem;
+      margin-top: 0.2rem;
+      flex-wrap: wrap;
+    }
+
+    .width-cat {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      color: var(--dim);
+      transition: all 0.15s;
+    }
+
+    .width-cat.active {
+      border-color: var(--text);
+      color: var(--text);
+      background: #1f2230;
+    }
+
+    /* Fit key */
+    .key-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .key-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Width reference */
+    .ref-table {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .ref-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+    }
+
+    .ref-name { color: var(--muted); }
+    .ref-val  { color: var(--dim); font-variant-numeric: tabular-nums; }
+
+    /* ── Right panel ─────────────────────────────────────────────────────── */
+    .right {
+      padding: 1.5rem;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .filter-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      padding: 0.35rem 1rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .filter-btn.active {
+      background: var(--text);
+      border-color: var(--text);
+      color: var(--bg);
+    }
+
+    .results-meta {
+      margin-left: auto;
+      font-size: 0.72rem;
+      color: var(--dim);
+    }
+
+    /* ── Cards ───────────────────────────────────────────────────────────── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .shoe-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      border-left: 3px solid var(--border);
+    }
+
+    .shoe-card.verdict-good       { border-left-color: var(--green); }
+    .shoe-card.verdict-likely     { border-left-color: var(--amber); }
+    .shoe-card.verdict-borderline { border-left-color: var(--amber); }
+    .shoe-card.verdict-poor       { border-left-color: var(--red); }
+
+    .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .shoe-name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .terrain-badge {
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .terrain-road  { background: #1e2030; color: var(--muted); }
+    .terrain-trail { background: #1a1e10; color: #7a8c3a; }
+
+    /* Fit metric boxes */
+    .fit-metrics {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .fit-metric {
+      flex: 1;
+      border-radius: 7px;
+      padding: 0.5rem 0.7rem;
+    }
+
+    .fit-metric.green { background: var(--green-bg); }
+    .fit-metric.amber { background: var(--amber-bg); }
+    .fit-metric.red   { background: var(--red-bg); }
+
+    .metric-label {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 0.2rem;
+    }
+
+    .metric-value {
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .metric-value.green { color: var(--green); }
+    .metric-value.amber { color: var(--amber); }
+    .metric-value.red   { color: var(--red); }
+
+    /* Card footer */
+    .card-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .fit-note {
+      font-size: 0.7rem;
+      color: var(--muted);
+      font-style: italic;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .verdict-badge {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.65rem;
+      border-radius: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .verdict-badge.good       { background: var(--green-bg); color: var(--green); }
+    .verdict-badge.likely     { background: var(--likely-bg); color: var(--amber); }
+    .verdict-badge.borderline { background: var(--amber-bg); color: var(--amber); }
+    .verdict-badge.poor       { background: var(--red-bg); color: var(--red); }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      padding: 4rem 2rem;
+      text-align: center;
+      color: var(--dim);
+      font-size: 0.9rem;
+    }
+
+    /* ── Instructions ────────────────────────────────────────────────────── */
+    .instructions {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .instr-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .instr-text {
+      font-size: 0.76rem;
+      color: var(--dim);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 680px) {
+      .layout { grid-template-columns: 1fr; }
+      .left { border-right: none; border-bottom: 1px solid var(--border); }
+      .cards { grid-template-columns: 1fr; }
+      .results-meta { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Foot Fit Finder</h1>
+  <p>Running shoe sizing by foot measurements</p>
+</header>
+
+<div class="layout">
+
+  <!-- ── Left panel ───────────────────────────────────────────────────────── -->
+  <div class="left">
+
+    <div>
+      <div class="panel-label">Your Foot Profile</div>
+
+      <div class="input-group" style="margin-bottom:1rem">
+        <label>Foot Length</label>
+        <div class="input-row">
+          <input type="number" id="foot-length" min="200" max="340" placeholder="265">
+          <span class="input-unit">mm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Foot Width <span style="font-size:0.66rem">(at widest point)</span></label>
+        <div class="input-row">
+          <input type="number" id="foot-width" min="70" max="140" placeholder="95">
+          <span class="input-unit">mm</span>
+        </div>
+        <div class="width-cats">
+          <span class="width-cat" data-cat="narrow">Narrow</span>
+          <span class="width-cat" data-cat="standard">Standard</span>
+          <span class="width-cat" data-cat="wide">Wide</span>
+          <span class="width-cat" data-cat="xwide">X-Wide</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-label">Fit Key</div>
+      <div class="key-row"><div class="key-dot" style="background:var(--green)"></div> Good fit</div>
+      <div class="key-row"><div class="key-dot" style="background:var(--amber)"></div> Likely / Borderline</div>
+      <div class="key-row"><div class="key-dot" style="background:var(--red)"></div> Poor fit</div>
+    </div>
+
+    <div>
+      <div class="panel-label">Width Reference</div>
+      <div class="ref-table">
+        <div class="ref-row"><span class="ref-name">Narrow</span><span class="ref-val">&lt; 89 mm</span></div>
+        <div class="ref-row"><span class="ref-name">Standard</span><span class="ref-val">89 – 99 mm</span></div>
+        <div class="ref-row"><span class="ref-name">Wide</span><span class="ref-val">100 – 109 mm</span></div>
+        <div class="ref-row"><span class="ref-name">X-Wide</span><span class="ref-val">110 mm+</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── Right panel ──────────────────────────────────────────────────────── -->
+  <div class="right">
+
+    <div class="toolbar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="road">Road</button>
+      <button class="filter-btn" data-filter="trail">Trail</button>
+      <span class="results-meta" id="results-meta"></span>
+    </div>
+
+    <div class="cards" id="cards">
+      <div class="empty-state">Enter your foot measurements to see fit results</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── Measuring instructions ─────────────────────────────────────────────── -->
+<div class="instructions">
+  <div>
+    <div class="instr-title">How to Measure Length</div>
+    <div class="instr-text">Stand on a piece of paper and mark the back of your heel and the tip of your longest toe. Measure between the marks in mm. Measure both feet and use the longer one.</div>
+  </div>
+  <div>
+    <div class="instr-title">How to Measure Width</div>
+    <div class="instr-text">Stand on a piece of paper and mark the widest points on each side of your foot across the ball. Measure between the marks in mm. Do this standing — feet spread more under load.</div>
+  </div>
+  <div>
+    <div class="instr-title">Thumb Space</div>
+    <div class="instr-text">Running shoes should have 10–15 mm of space between your longest toe and the end of the shoe. This allows for foot swelling and toe splay during a run.</div>
+  </div>
+</div>
+
+<script>
+  // ── Shoe data ─────────────────────────────────────────────────────────────────
+  // lengthRange: [min, max] internal shoe length in mm across all available sizes
+  // widths: option name → [min, max] mm at ball of foot
+  // Note: width ranges are per-brand — some brands run wider/narrower than others
+
+  const SHOES = [
+    {
+      name: "Nike Pegasus 41",
+      terrain: "road",
+      lengthRange: [222, 302],
+      widths: {
+        standard: [88, 98],
+        wide:     [99, 109],
+      },
+      fitNote: "Slightly narrow standard fit. True to size.",
+    },
+    {
+      name: "ASICS Gel-Kayano 31",
+      terrain: "road",
+      lengthRange: [222, 302],
+      widths: {
+        narrow:   [82, 88],
+        standard: [89, 99],
+        wide:     [100, 109],
+        xwide:    [110, 119],
+      },
+      fitNote: "Available in most widths. Structured support for overpronation.",
+    },
+    {
+      name: "Brooks Ghost 16",
+      terrain: "road",
+      lengthRange: [222, 308],
+      widths: {
+        narrow:   [82, 88],
+        standard: [89, 100],
+        wide:     [101, 111],
+      },
+      fitNote: "Accommodating fit with a generous toe box.",
+    },
+    {
+      name: "New Balance Fresh Foam 1080v14",
+      terrain: "road",
+      lengthRange: [222, 308],
+      widths: {
+        narrow:   [82, 88],
+        standard: [89, 102],
+        wide:     [103, 112],
+        xwide:    [113, 122],
+      },
+      fitNote: "Generous fit across all widths. Plush and comfortable.",
+    },
+    {
+      name: "Hoka Clifton 9",
+      terrain: "road",
+      lengthRange: [222, 308],
+      widths: {
+        standard: [89, 103],
+        wide:     [104, 114],
+      },
+      fitNote: "Runs slightly wide. Roomy toe box suits wider feet well.",
+    },
+    {
+      name: "Saucony Endorphin Speed 4",
+      terrain: "road",
+      lengthRange: [222, 295],
+      widths: {
+        standard: [86, 96],
+        wide:     [97, 107],
+      },
+      fitNote: "Snug performance fit. Size up if between sizes.",
+    },
+    {
+      name: "On Cloudmonster 2",
+      terrain: "road",
+      lengthRange: [228, 302],
+      widths: {
+        standard: [86, 96],
+      },
+      fitNote: "Standard width only. On shoes run narrow — not ideal for wide feet.",
+    },
+    {
+      name: "Salomon Speedcross 6",
+      terrain: "trail",
+      lengthRange: [229, 295],
+      widths: {
+        standard: [84, 94],
+      },
+      fitNote: "Narrow, precision fit. Designed for technical terrain.",
+    },
+    {
+      name: "Hoka Speedgoat 6",
+      terrain: "trail",
+      lengthRange: [222, 302],
+      widths: {
+        standard: [89, 103],
+        wide:     [104, 114],
+      },
+      fitNote: "Roomy toe box. Good for long days on trail.",
+    },
+    {
+      name: "Brooks Cascadia 17",
+      terrain: "trail",
+      lengthRange: [222, 308],
+      widths: {
+        standard: [88, 99],
+        wide:     [100, 110],
+      },
+      fitNote: "True to size. Protective fit for rough terrain.",
+    },
+  ];
+
+  // ── Fit logic ─────────────────────────────────────────────────────────────────
+
+  // Length fit: checks whether any shoe size gives 10–15mm thumb space
+  // Amber if the closest size gives 7–9mm (tight) or 16–18mm (loose)
+  function fitLength(footLen, shoe) {
+    const [shoeMin, shoeMax] = shoe.lengthRange;
+    if ((footLen + 10) <= shoeMax && (footLen + 15) >= shoeMin) return 'green';
+    if ((footLen +  7) <= shoeMax && (footLen + 18) >= shoeMin) return 'amber';
+    return 'red';
+  }
+
+  // Width fit: checks if foot width falls within any available width's mm range
+  function fitWidth(footWidth, shoe) {
+    for (const [min, max] of Object.values(shoe.widths)) {
+      if (footWidth >= min && footWidth <= max) return 'green';
+    }
+    // Amber if within 5mm of any available width range
+    for (const [min, max] of Object.values(shoe.widths)) {
+      if (footWidth >= min - 5 && footWidth <= max + 5) return 'amber';
+    }
+    return 'red';
+  }
+
+  function verdict(lenFit, widthFit) {
+    if (lenFit === 'red' || widthFit === 'red') return 'poor';
+    if (lenFit === 'green' && widthFit === 'green') return 'good';
+    if (lenFit === 'green' || widthFit === 'green') return 'likely';
+    return 'borderline'; // amber + amber
+  }
+
+  const SORT_ORDER    = { good: 0, likely: 1, borderline: 2, poor: 3 };
+  const FIT_LABEL     = { green: 'Good', amber: 'Borderline', red: 'Poor' };
+  const VERDICT_LABEL = { good: 'Good Fit', likely: 'Likely Fit', borderline: 'Borderline', poor: 'Poor Fit' };
+
+  function widthCat(mm) {
+    if (mm < 89)  return 'narrow';
+    if (mm < 100) return 'standard';
+    if (mm < 110) return 'wide';
+    return 'xwide';
+  }
+
+  // ── Render ────────────────────────────────────────────────────────────────────
+
+  let activeFilter = 'all';
+
+  function render() {
+    const footLen   = parseInt(document.getElementById('foot-length').value, 10);
+    const footWidth = parseInt(document.getElementById('foot-width').value, 10);
+    const cardsEl   = document.getElementById('cards');
+    const metaEl    = document.getElementById('results-meta');
+
+    // Update width category indicator
+    const catEls = document.querySelectorAll('.width-cat');
+    catEls.forEach(el => el.classList.toggle('active',
+      !isNaN(footWidth) && footWidth > 0 && el.dataset.cat === widthCat(footWidth)
+    ));
+
+    if (isNaN(footLen) || isNaN(footWidth) || footLen <= 0 || footWidth <= 0) {
+      cardsEl.innerHTML = '<div class="empty-state">Enter your foot measurements to see fit results</div>';
+      metaEl.textContent = '';
+      return;
+    }
+
+    const filtered = SHOES.filter(s => activeFilter === 'all' || s.terrain === activeFilter);
+
+    const results = filtered
+      .map(shoe => {
+        const lf = fitLength(footLen, shoe);
+        const wf = fitWidth(footWidth, shoe);
+        const v  = verdict(lf, wf);
+        return { shoe, lf, wf, v };
+      })
+      .sort((a, b) => SORT_ORDER[a.v] - SORT_ORDER[b.v]);
+
+    const goodCount = results.filter(r => r.v === 'good' || r.v === 'likely').length;
+    const noun = activeFilter === 'all' ? 'shoes' : `${activeFilter} shoes`;
+    metaEl.textContent = `${goodCount} of ${results.length} ${noun} likely to fit`;
+
+    cardsEl.innerHTML = results.map(({ shoe, lf, wf, v }) => `
+      <div class="shoe-card verdict-${v}">
+        <div class="card-top">
+          <div class="shoe-name">${shoe.name}</div>
+          <span class="terrain-badge terrain-${shoe.terrain}">${shoe.terrain}</span>
+        </div>
+        <div class="fit-metrics">
+          <div class="fit-metric ${lf}">
+            <div class="metric-label">Length</div>
+            <div class="metric-value ${lf}">${FIT_LABEL[lf]}</div>
+          </div>
+          <div class="fit-metric ${wf}">
+            <div class="metric-label">Width</div>
+            <div class="metric-value ${wf}">${FIT_LABEL[wf]}</div>
+          </div>
+        </div>
+        <div class="card-bottom">
+          <div class="fit-note">${shoe.fitNote}</div>
+          <div class="verdict-badge ${v}">${VERDICT_LABEL[v]}</div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── Event listeners ───────────────────────────────────────────────────────────
+
+  document.getElementById('foot-length').addEventListener('input', render);
+  document.getElementById('foot-width').addEventListener('input', render);
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      activeFilter = this.dataset.filter;
+      render();
+    });
+  });
+
+  render();
+</script>
+</body>
+</html>
