@@ -30,7 +30,6 @@
       min-height: 100vh;
     }
 
-    /* ── Header ──────────────────────────────────────────────────────────── */
     header {
       border-bottom: 1px solid var(--border);
       padding: 1.1rem 2rem;
@@ -46,16 +45,12 @@
       text-transform: uppercase;
     }
 
-    header p {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    header p { font-size: 0.8rem; color: var(--muted); }
 
-    /* ── Layout ──────────────────────────────────────────────────────────── */
     .layout {
       display: grid;
-      grid-template-columns: 260px 1fr;
-      min-height: calc(100vh - 53px - 160px);
+      grid-template-columns: 270px 1fr;
+      min-height: calc(100vh - 53px - 180px);
     }
 
     /* ── Left panel ──────────────────────────────────────────────────────── */
@@ -80,19 +75,14 @@
       display: flex;
       flex-direction: column;
       gap: 0.35rem;
+      margin-bottom: 1rem;
     }
 
-    .input-group label {
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
+    .input-group:last-child { margin-bottom: 0; }
 
-    .input-row {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
+    .input-group label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; }
+
+    .input-row { display: flex; align-items: center; gap: 0.5rem; }
 
     .input-row input {
       flex: 1;
@@ -113,19 +103,9 @@
     .input-row input::-webkit-inner-spin-button { -webkit-appearance: none; }
 
     .input-row input:focus { border-color: var(--muted); }
+    .input-unit { font-size: 0.78rem; color: var(--muted); }
 
-    .input-unit {
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
-    /* Width category pills */
-    .width-cats {
-      display: flex;
-      gap: 0.3rem;
-      margin-top: 0.2rem;
-      flex-wrap: wrap;
-    }
+    .width-cats { display: flex; gap: 0.3rem; margin-top: 0.2rem; flex-wrap: wrap; }
 
     .width-cat {
       font-size: 0.62rem;
@@ -139,13 +119,25 @@
       transition: all 0.15s;
     }
 
-    .width-cat.active {
-      border-color: var(--text);
-      color: var(--text);
-      background: #1f2230;
+    .width-cat.active { border-color: var(--text); color: var(--text); background: #1f2230; }
+
+    .toe-toggle { display: flex; flex-direction: column; gap: 0.3rem; margin-top: 0.2rem; }
+
+    .toe-btn {
+      background: #12151f;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.4rem 0.75rem;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.15s;
     }
 
-    /* Fit key */
+    .toe-btn.active { border-color: var(--muted); color: var(--text); background: #1f2230; }
+
     .key-row {
       display: flex;
       align-items: center;
@@ -155,40 +147,18 @@
       margin-bottom: 0.35rem;
     }
 
-    .key-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      flex-shrink: 0;
-    }
+    .key-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-    /* Width reference */
-    .ref-table {
-      display: flex;
-      flex-direction: column;
-      gap: 0.2rem;
-    }
+    .ref-table { display: flex; flex-direction: column; gap: 0.2rem; }
 
-    .ref-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.72rem;
-    }
-
+    .ref-row { display: flex; justify-content: space-between; font-size: 0.72rem; }
     .ref-name { color: var(--muted); }
     .ref-val  { color: var(--dim); font-variant-numeric: tabular-nums; }
 
     /* ── Right panel ─────────────────────────────────────────────────────── */
-    .right {
-      padding: 1.5rem;
-    }
+    .right { padding: 1.5rem; }
 
-    .toolbar {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 1.25rem;
-    }
+    .toolbar { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.25rem; }
 
     .filter-btn {
       background: var(--surface);
@@ -203,22 +173,14 @@
       transition: all 0.15s;
     }
 
-    .filter-btn.active {
-      background: var(--text);
-      border-color: var(--text);
-      color: var(--bg);
-    }
+    .filter-btn.active { background: var(--text); border-color: var(--text); color: var(--bg); }
 
-    .results-meta {
-      margin-left: auto;
-      font-size: 0.72rem;
-      color: var(--dim);
-    }
+    .results-meta { margin-left: auto; font-size: 0.72rem; color: var(--dim); }
 
     /* ── Cards ───────────────────────────────────────────────────────────── */
     .cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
       gap: 0.75rem;
     }
 
@@ -229,7 +191,7 @@
       padding: 1.1rem 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.7rem;
       border-left: 3px solid var(--border);
     }
 
@@ -245,11 +207,24 @@
       gap: 0.5rem;
     }
 
-    .shoe-name {
-      font-size: 0.9rem;
-      font-weight: 700;
-      line-height: 1.25;
+    .shoe-name { font-size: 0.9rem; font-weight: 700; line-height: 1.25; }
+
+    .card-summary {
+      font-size: 0.72rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-wrap: wrap;
     }
+
+    .summary-sep { color: var(--dim); }
+
+    .summary-verdict { font-weight: 700; }
+    .summary-verdict.good       { color: var(--green); }
+    .summary-verdict.likely     { color: var(--amber); }
+    .summary-verdict.borderline { color: var(--amber); }
+    .summary-verdict.poor       { color: var(--red); }
 
     .terrain-badge {
       font-size: 0.58rem;
@@ -264,41 +239,70 @@
     .terrain-road  { background: #1e2030; color: var(--muted); }
     .terrain-trail { background: #1a1e10; color: #7a8c3a; }
 
-    /* Fit metric boxes */
-    .fit-metrics {
-      display: flex;
-      gap: 0.5rem;
-    }
+    /* ── Fit metric boxes ────────────────────────────────────────────────── */
+    .fit-metrics { display: flex; gap: 0.4rem; }
 
     .fit-metric {
       flex: 1;
       border-radius: 7px;
-      padding: 0.5rem 0.7rem;
+      padding: 0.5rem 0.6rem;
+      min-width: 0;
     }
 
     .fit-metric.green { background: var(--green-bg); }
     .fit-metric.amber { background: var(--amber-bg); }
     .fit-metric.red   { background: var(--red-bg); }
+    .fit-metric.none  { background: #12151f; border: 1px dashed var(--border); }
 
     .metric-label {
-      font-size: 0.6rem;
+      font-size: 0.56rem;
       font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--dim);
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.25rem;
     }
 
-    .metric-value {
-      font-size: 0.78rem;
+    /* Main recommendation (EU size or width option) */
+    .metric-rec {
+      font-size: 0.85rem;
       font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .metric-value.green { color: var(--green); }
-    .metric-value.amber { color: var(--amber); }
-    .metric-value.red   { color: var(--red); }
+    .fit-metric.red  .metric-rec { color: var(--muted); font-size: 0.72rem; }
+    .fit-metric.none .metric-rec { color: var(--dim); }
 
-    /* Card footer */
+    /* Secondary line (US sizes, or shape/depth) */
+    .metric-sub {
+      font-size: 0.6rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+      line-height: 1.3;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Coloured status text */
+    .metric-status {
+      font-size: 0.62rem;
+      font-weight: 700;
+      margin-top: 0.25rem;
+    }
+
+    .metric-status.green { color: var(--green); }
+    .metric-status.amber { color: var(--amber); }
+    .metric-status.red   { color: var(--red); }
+    .metric-status.none  { color: var(--dim); }
+
+    .toe-meta { font-size: 0.66rem; color: var(--dim); }
+    .toe-prompt { font-size: 0.67rem; color: var(--dim); font-style: italic; }
+
     .card-bottom {
       display: flex;
       align-items: flex-end;
@@ -306,13 +310,7 @@
       gap: 0.75rem;
     }
 
-    .fit-note {
-      font-size: 0.7rem;
-      color: var(--muted);
-      font-style: italic;
-      line-height: 1.5;
-      flex: 1;
-    }
+    .fit-note { font-size: 0.7rem; color: var(--muted); font-style: italic; line-height: 1.5; flex: 1; }
 
     .verdict-badge {
       font-size: 0.65rem;
@@ -330,7 +328,6 @@
     .verdict-badge.borderline { background: var(--amber-bg); color: var(--amber); }
     .verdict-badge.poor       { background: var(--red-bg); color: var(--red); }
 
-    /* Empty state */
     .empty-state {
       grid-column: 1 / -1;
       padding: 4rem 2rem;
@@ -344,7 +341,7 @@
       border-top: 1px solid var(--border);
       padding: 1.5rem 2rem;
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
       gap: 1.5rem;
     }
 
@@ -357,11 +354,7 @@
       margin-bottom: 0.5rem;
     }
 
-    .instr-text {
-      font-size: 0.76rem;
-      color: var(--dim);
-      line-height: 1.65;
-    }
+    .instr-text { font-size: 0.76rem; color: var(--dim); line-height: 1.65; }
 
     @media (max-width: 680px) {
       .layout { grid-template-columns: 1fr; }
@@ -379,14 +372,11 @@
 </header>
 
 <div class="layout">
-
-  <!-- ── Left panel ───────────────────────────────────────────────────────── -->
   <div class="left">
-
     <div>
       <div class="panel-label">Your Foot Profile</div>
 
-      <div class="input-group" style="margin-bottom:1rem">
+      <div class="input-group">
         <label>Foot Length</label>
         <div class="input-row">
           <input type="number" id="foot-length" min="200" max="340" placeholder="265">
@@ -407,6 +397,23 @@
           <span class="width-cat" data-cat="xwide">X-Wide</span>
         </div>
       </div>
+
+      <div class="input-group">
+        <label>Ball-of-Foot Circumference <span style="font-size:0.66rem">(optional)</span></label>
+        <div class="input-row">
+          <input type="number" id="foot-circ" min="170" max="310" placeholder="230">
+          <span class="input-unit">mm</span>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Longest Toe <span style="font-size:0.66rem">(optional)</span></label>
+        <div class="toe-toggle">
+          <button class="toe-btn" data-toe="big">Big toe</button>
+          <button class="toe-btn" data-toe="second">Second toe</button>
+          <button class="toe-btn" data-toe="even">Toes roughly even</button>
+        </div>
+      </div>
     </div>
 
     <div>
@@ -425,27 +432,21 @@
         <div class="ref-row"><span class="ref-name">X-Wide</span><span class="ref-val">110 mm+</span></div>
       </div>
     </div>
-
   </div>
 
-  <!-- ── Right panel ──────────────────────────────────────────────────────── -->
   <div class="right">
-
     <div class="toolbar">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="road">Road</button>
       <button class="filter-btn" data-filter="trail">Trail</button>
       <span class="results-meta" id="results-meta"></span>
     </div>
-
     <div class="cards" id="cards">
       <div class="empty-state">Enter your foot measurements to see fit results</div>
     </div>
-
   </div>
 </div>
 
-<!-- ── Measuring instructions ─────────────────────────────────────────────── -->
 <div class="instructions">
   <div>
     <div class="instr-title">How to Measure Length</div>
@@ -456,6 +457,10 @@
     <div class="instr-text">Stand on a piece of paper and mark the widest points on each side of your foot across the ball. Measure between the marks in mm. Do this standing — feet spread more under load.</div>
   </div>
   <div>
+    <div class="instr-title">How to Measure Circumference</div>
+    <div class="instr-text">Wrap a flexible tape measure around the widest part of your foot across the ball. Stand while measuring. Record in mm.</div>
+  </div>
+  <div>
     <div class="instr-title">Thumb Space</div>
     <div class="instr-text">Running shoes should have 10–15 mm of space between your longest toe and the end of the shoe. This allows for foot swelling and toe splay during a run.</div>
   </div>
@@ -463,120 +468,188 @@
 
 <script>
   // ── Shoe data ─────────────────────────────────────────────────────────────────
-  // lengthRange: [min, max] internal shoe length in mm across all available sizes
-  // widths: option name → [min, max] mm at ball of foot
-  // Note: width ranges are per-brand — some brands run wider/narrower than others
-
+  // lengthRange: [min, max] foot length (mm) the shoe can accommodate
+  // widths: option → [min, max] ball-of-foot width in mm
   const SHOES = [
     {
       name: "Nike Pegasus 41",
       terrain: "road",
       lengthRange: [222, 302],
-      widths: {
-        standard: [88, 98],
-        wide:     [99, 109],
-      },
+      widths: { standard: [88, 98], wide: [99, 109] },
+      toeBoxShape: "tapered",
+      toeBoxDepth: "medium",
+      circumferenceRange: [220, 245],
       fitNote: "Slightly narrow standard fit. True to size.",
     },
     {
       name: "ASICS Gel-Kayano 31",
       terrain: "road",
       lengthRange: [222, 302],
-      widths: {
-        narrow:   [82, 88],
-        standard: [89, 99],
-        wide:     [100, 109],
-        xwide:    [110, 119],
-      },
+      widths: { narrow: [82, 88], standard: [89, 99], wide: [100, 109], xwide: [110, 119] },
+      toeBoxShape: "standard",
+      toeBoxDepth: "medium",
+      circumferenceRange: [218, 248],
       fitNote: "Available in most widths. Structured support for overpronation.",
     },
     {
       name: "Brooks Ghost 16",
       terrain: "road",
       lengthRange: [222, 308],
-      widths: {
-        narrow:   [82, 88],
-        standard: [89, 100],
-        wide:     [101, 111],
-      },
+      widths: { narrow: [82, 88], standard: [89, 100], wide: [101, 111] },
+      toeBoxShape: "standard",
+      toeBoxDepth: "medium",
+      circumferenceRange: [220, 250],
       fitNote: "Accommodating fit with a generous toe box.",
     },
     {
       name: "New Balance Fresh Foam 1080v14",
       terrain: "road",
       lengthRange: [222, 308],
-      widths: {
-        narrow:   [82, 88],
-        standard: [89, 102],
-        wide:     [103, 112],
-        xwide:    [113, 122],
-      },
+      widths: { narrow: [82, 88], standard: [89, 102], wide: [103, 112], xwide: [113, 122] },
+      toeBoxShape: "wide/round",
+      toeBoxDepth: "high",
+      circumferenceRange: [222, 255],
       fitNote: "Generous fit across all widths. Plush and comfortable.",
     },
     {
       name: "Hoka Clifton 9",
       terrain: "road",
       lengthRange: [222, 308],
-      widths: {
-        standard: [89, 103],
-        wide:     [104, 114],
-      },
+      widths: { standard: [89, 103], wide: [104, 114] },
+      toeBoxShape: "wide/round",
+      toeBoxDepth: "high",
+      circumferenceRange: [225, 258],
       fitNote: "Runs slightly wide. Roomy toe box suits wider feet well.",
     },
     {
       name: "Saucony Endorphin Speed 4",
       terrain: "road",
       lengthRange: [222, 295],
-      widths: {
-        standard: [86, 96],
-        wide:     [97, 107],
-      },
+      widths: { standard: [86, 96], wide: [97, 107] },
+      toeBoxShape: "tapered",
+      toeBoxDepth: "low",
+      circumferenceRange: [215, 240],
       fitNote: "Snug performance fit. Size up if between sizes.",
     },
     {
       name: "On Cloudmonster 2",
       terrain: "road",
       lengthRange: [228, 302],
-      widths: {
-        standard: [86, 96],
-      },
+      widths: { standard: [86, 96] },
+      toeBoxShape: "tapered",
+      toeBoxDepth: "low",
+      circumferenceRange: [215, 238],
       fitNote: "Standard width only. On shoes run narrow — not ideal for wide feet.",
     },
     {
       name: "Salomon Speedcross 6",
       terrain: "trail",
       lengthRange: [229, 295],
-      widths: {
-        standard: [84, 94],
-      },
+      widths: { standard: [84, 94] },
+      toeBoxShape: "tapered",
+      toeBoxDepth: "low",
+      circumferenceRange: [214, 238],
       fitNote: "Narrow, precision fit. Designed for technical terrain.",
     },
     {
       name: "Hoka Speedgoat 6",
       terrain: "trail",
       lengthRange: [222, 302],
-      widths: {
-        standard: [89, 103],
-        wide:     [104, 114],
-      },
+      widths: { standard: [89, 103], wide: [104, 114] },
+      toeBoxShape: "wide/round",
+      toeBoxDepth: "medium",
+      circumferenceRange: [220, 250],
       fitNote: "Roomy toe box. Good for long days on trail.",
     },
     {
       name: "Brooks Cascadia 17",
       terrain: "trail",
       lengthRange: [222, 308],
-      widths: {
-        standard: [88, 99],
-        wide:     [100, 110],
-      },
+      widths: { standard: [88, 99], wide: [100, 110] },
+      toeBoxShape: "standard",
+      toeBoxDepth: "medium",
+      circumferenceRange: [219, 248],
       fitNote: "True to size. Protective fit for rough terrain.",
     },
   ];
 
+  // ── Size lookup table ─────────────────────────────────────────────────────────
+  // footMm: the foot length this entry corresponds to
+  // EU size derived from Paris point formula: (footMm + 12) / 6.67
+  // US Men's / Women's / UK are standard industry conversions
+
+  const SIZE_TABLE = [
+    { footMm: 222, eu: 35,   usM: null, usW: 4.5  },
+    { footMm: 225, eu: 35.5, usM: null, usW: 5    },
+    { footMm: 228, eu: 36,   usM: null, usW: 5.5  },
+    { footMm: 232, eu: 36.5, usM: null, usW: 6    },
+    { footMm: 235, eu: 37,   usM: null, usW: 6.5  },
+    { footMm: 238, eu: 37.5, usM: null, usW: 7    },
+    { footMm: 241, eu: 38,   usM: 5.5,  usW: 7.5  },
+    { footMm: 245, eu: 38.5, usM: 6,    usW: 8    },
+    { footMm: 248, eu: 39,   usM: 6.5,  usW: 8.5  },
+    { footMm: 252, eu: 40,   usM: 7,    usW: 9    },
+    { footMm: 255, eu: 40.5, usM: 7.5,  usW: 9.5  },
+    { footMm: 258, eu: 41,   usM: 8,    usW: 10   },
+    { footMm: 262, eu: 42,   usM: 8.5,  usW: 10.5 },
+    { footMm: 265, eu: 42,   usM: 8.5,  usW: 10.5 },
+    { footMm: 268, eu: 42.5, usM: 9,    usW: 11   },
+    { footMm: 272, eu: 43,   usM: 9.5,  usW: 11.5 },
+    { footMm: 275, eu: 43.5, usM: 10,   usW: 12   },
+    { footMm: 278, eu: 44,   usM: 10,   usW: 12   },
+    { footMm: 282, eu: 44.5, usM: 10.5, usW: null },
+    { footMm: 285, eu: 45,   usM: 11,   usW: null },
+    { footMm: 288, eu: 45.5, usM: 11.5, usW: null },
+    { footMm: 292, eu: 46,   usM: 12,   usW: null },
+    { footMm: 295, eu: 46.5, usM: 12.5, usW: null },
+    { footMm: 298, eu: 47,   usM: 13,   usW: null },
+    { footMm: 302, eu: 47.5, usM: 13.5, usW: null },
+    { footMm: 305, eu: 48,   usM: 14,   usW: null },
+    { footMm: 308, eu: 49,   usM: 15,   usW: null },
+  ];
+
+  // Find the SIZE_TABLE entry with closest footMm to the given value,
+  // clamped to within the shoe's length range.
+  function recommendSize(footLen, shoe) {
+    const [shoeMin, shoeMax] = shoe.lengthRange;
+    // Only consider entries within the shoe's foot-length range
+    const available = SIZE_TABLE.filter(e => e.footMm >= shoeMin && e.footMm <= shoeMax);
+    if (available.length === 0) return null;
+    return available.reduce((best, e) =>
+      Math.abs(e.footMm - footLen) < Math.abs(best.footMm - footLen) ? e : best
+    );
+  }
+
+  function formatSizeRec(entry) {
+    if (!entry) return { primary: 'No size', secondary: '' };
+    const parts = [];
+    if (entry.usM !== null) parts.push(`M ${entry.usM}`);
+    if (entry.usW !== null) parts.push(`W ${entry.usW}`);
+    return {
+      primary:   `EU ${entry.eu}`,
+      secondary: parts.length ? 'US ' + parts.join(' / ') : '',
+    };
+  }
+
+  const WIDTH_NAMES = { narrow: 'Narrow', standard: 'Standard', wide: 'Wide', xwide: 'X-Wide' };
+
+  // Returns the best-matching width option name for the foot width
+  function recommendWidth(footWidth, shoe) {
+    // Exact match
+    for (const [name, [min, max]] of Object.entries(shoe.widths)) {
+      if (footWidth >= min && footWidth <= max) return WIDTH_NAMES[name];
+    }
+    // Borderline: find nearest option
+    let closest = null, closestDist = Infinity;
+    for (const [name, [min, max]] of Object.entries(shoe.widths)) {
+      const dist = footWidth < min ? min - footWidth : footWidth - max;
+      if (dist < closestDist) { closestDist = dist; closest = name; }
+    }
+    return closest ? WIDTH_NAMES[closest] : null;
+  }
+
   // ── Fit logic ─────────────────────────────────────────────────────────────────
 
-  // Length fit: checks whether any shoe size gives 10–15mm thumb space
-  // Amber if the closest size gives 7–9mm (tight) or 16–18mm (loose)
   function fitLength(footLen, shoe) {
     const [shoeMin, shoeMax] = shoe.lengthRange;
     if ((footLen + 10) <= shoeMax && (footLen + 15) >= shoeMin) return 'green';
@@ -584,28 +657,45 @@
     return 'red';
   }
 
-  // Width fit: checks if foot width falls within any available width's mm range
   function fitWidth(footWidth, shoe) {
     for (const [min, max] of Object.values(shoe.widths)) {
       if (footWidth >= min && footWidth <= max) return 'green';
     }
-    // Amber if within 5mm of any available width range
     for (const [min, max] of Object.values(shoe.widths)) {
       if (footWidth >= min - 5 && footWidth <= max + 5) return 'amber';
     }
     return 'red';
   }
 
-  function verdict(lenFit, widthFit) {
-    if (lenFit === 'red' || widthFit === 'red') return 'poor';
-    if (lenFit === 'green' && widthFit === 'green') return 'good';
-    if (lenFit === 'green' || widthFit === 'green') return 'likely';
-    return 'borderline'; // amber + amber
+  function fitToeBox(footCirc, longestToe, shoe) {
+    if (footCirc === null) return null;
+    const [cMin, cMax] = shoe.circumferenceRange;
+    let fit;
+    if (footCirc >= cMin && footCirc <= cMax)           fit = 'green';
+    else if (footCirc >= cMin - 5 && footCirc <= cMax + 5) fit = 'amber';
+    else                                                    fit = 'red';
+    // Shape modifier: tapered box with second/even toe → downgrade green to amber only
+    if (shoe.toeBoxShape === 'tapered' &&
+        (longestToe === 'second' || longestToe === 'even') &&
+        fit === 'green') {
+      fit = 'amber';
+    }
+    return fit;
+  }
+
+  function verdict(fits) {
+    const active = fits.filter(f => f !== null);
+    if (active.includes('red'))           return 'poor';
+    if (active.every(f => f === 'green')) return 'good';
+    if (active.filter(f => f === 'amber').length >= 2) return 'borderline';
+    return 'likely';
   }
 
   const SORT_ORDER    = { good: 0, likely: 1, borderline: 2, poor: 3 };
   const FIT_LABEL     = { green: 'Good', amber: 'Borderline', red: 'Poor' };
   const VERDICT_LABEL = { good: 'Good Fit', likely: 'Likely Fit', borderline: 'Borderline', poor: 'Poor Fit' };
+  const TOE_SHAPE_LABEL = { 'tapered': 'Tapered', 'standard': 'Standard', 'wide/round': 'Wide / round' };
+  const TOE_DEPTH_LABEL = { 'low': 'Low vol.', 'medium': 'Med. vol.', 'high': 'High vol.' };
 
   function widthCat(mm) {
     if (mm < 89)  return 'narrow';
@@ -614,21 +704,25 @@
     return 'xwide';
   }
 
-  // ── Render ────────────────────────────────────────────────────────────────────
+  // ── State & render ────────────────────────────────────────────────────────────
 
   let activeFilter = 'all';
+  let activeToe    = null;
 
   function render() {
     const footLen   = parseInt(document.getElementById('foot-length').value, 10);
     const footWidth = parseInt(document.getElementById('foot-width').value, 10);
+    const footCirc  = parseInt(document.getElementById('foot-circ').value, 10);
     const cardsEl   = document.getElementById('cards');
     const metaEl    = document.getElementById('results-meta');
 
-    // Update width category indicator
-    const catEls = document.querySelectorAll('.width-cat');
-    catEls.forEach(el => el.classList.toggle('active',
-      !isNaN(footWidth) && footWidth > 0 && el.dataset.cat === widthCat(footWidth)
-    ));
+    const circVal = (!isNaN(footCirc) && footCirc > 0) ? footCirc : null;
+
+    document.querySelectorAll('.width-cat').forEach(el =>
+      el.classList.toggle('active',
+        !isNaN(footWidth) && footWidth > 0 && el.dataset.cat === widthCat(footWidth)
+      )
+    );
 
     if (isNaN(footLen) || isNaN(footWidth) || footLen <= 0 || footWidth <= 0) {
       cardsEl.innerHTML = '<div class="empty-state">Enter your foot measurements to see fit results</div>';
@@ -642,8 +736,12 @@
       .map(shoe => {
         const lf = fitLength(footLen, shoe);
         const wf = fitWidth(footWidth, shoe);
-        const v  = verdict(lf, wf);
-        return { shoe, lf, wf, v };
+        const tf = fitToeBox(circVal, activeToe, shoe);
+        const v  = verdict([lf, wf, tf]);
+        const sizeEntry = recommendSize(footLen, shoe);
+        const sizeRec   = formatSizeRec(lf !== 'red' ? sizeEntry : null);
+        const widthRec  = recommendWidth(footWidth, shoe);
+        return { shoe, lf, wf, tf, v, sizeRec, widthRec };
       })
       .sort((a, b) => SORT_ORDER[a.v] - SORT_ORDER[b.v]);
 
@@ -651,40 +749,82 @@
     const noun = activeFilter === 'all' ? 'shoes' : `${activeFilter} shoes`;
     metaEl.textContent = `${goodCount} of ${results.length} ${noun} likely to fit`;
 
-    cardsEl.innerHTML = results.map(({ shoe, lf, wf, v }) => `
-      <div class="shoe-card verdict-${v}">
-        <div class="card-top">
-          <div class="shoe-name">${shoe.name}</div>
-          <span class="terrain-badge terrain-${shoe.terrain}">${shoe.terrain}</span>
-        </div>
-        <div class="fit-metrics">
-          <div class="fit-metric ${lf}">
-            <div class="metric-label">Length</div>
-            <div class="metric-value ${lf}">${FIT_LABEL[lf]}</div>
+    cardsEl.innerHTML = results.map(({ shoe, lf, wf, tf, v, sizeRec, widthRec }) => {
+
+      const toeMetricHtml = tf !== null
+        ? `<div class="fit-metric ${tf}">
+             <div class="metric-label">Toe Box</div>
+             <div class="metric-rec">${TOE_SHAPE_LABEL[shoe.toeBoxShape]}</div>
+             <div class="metric-sub">${TOE_DEPTH_LABEL[shoe.toeBoxDepth]}</div>
+             <div class="metric-status ${tf}">${FIT_LABEL[tf]}</div>
+           </div>`
+        : `<div class="fit-metric none">
+             <div class="metric-label">Toe Box</div>
+             <div class="metric-rec">—</div>
+             <div class="metric-sub">${TOE_SHAPE_LABEL[shoe.toeBoxShape]}</div>
+             <div class="metric-status none">Not assessed</div>
+           </div>`;
+
+      return `
+        <div class="shoe-card verdict-${v}">
+          <div class="card-top">
+            <div class="shoe-name">${shoe.name}</div>
+            <span class="terrain-badge terrain-${shoe.terrain}">${shoe.terrain}</span>
           </div>
-          <div class="fit-metric ${wf}">
-            <div class="metric-label">Width</div>
-            <div class="metric-value ${wf}">${FIT_LABEL[wf]}</div>
+          <div class="card-summary">
+            <span>${lf !== 'red' ? sizeRec.primary : 'No size'}</span>
+            <span class="summary-sep">·</span>
+            <span>${wf !== 'red' ? (widthRec || '—') + ' width' : 'No width'}</span>
+            <span class="summary-sep">·</span>
+            <span class="summary-verdict ${v}">${VERDICT_LABEL[v]}</span>
+          </div>
+          <div class="panel-label" style="margin-bottom:0.4rem">Suggested Fit</div>
+          <div class="fit-metrics">
+            <div class="fit-metric ${lf}">
+              <div class="metric-label">Length</div>
+              <div class="metric-rec">${sizeRec.primary}</div>
+              <div class="metric-sub">${sizeRec.secondary}</div>
+              <div class="metric-status ${lf}">${lf === 'red' ? 'Out of range' : FIT_LABEL[lf]}</div>
+            </div>
+            <div class="fit-metric ${wf}">
+              <div class="metric-label">Width</div>
+              <div class="metric-rec">${wf !== 'red' ? (widthRec || '—') : 'No option'}</div>
+              <div class="metric-sub">&nbsp;</div>
+              <div class="metric-status ${wf}">${wf === 'red' ? 'Out of range' : FIT_LABEL[wf]}</div>
+            </div>
+            ${toeMetricHtml}
+          </div>
+          ${tf === null ? `<div class="toe-prompt">Add toe measurements for full fit analysis</div>` : ''}
+          <div class="card-bottom">
+            <div class="fit-note">${shoe.fitNote}</div>
+            <div class="verdict-badge ${v}">${VERDICT_LABEL[v]}</div>
           </div>
         </div>
-        <div class="card-bottom">
-          <div class="fit-note">${shoe.fitNote}</div>
-          <div class="verdict-badge ${v}">${VERDICT_LABEL[v]}</div>
-        </div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   }
 
   // ── Event listeners ───────────────────────────────────────────────────────────
 
-  document.getElementById('foot-length').addEventListener('input', render);
-  document.getElementById('foot-width').addEventListener('input', render);
+  ['foot-length', 'foot-width', 'foot-circ'].forEach(id =>
+    document.getElementById(id).addEventListener('input', render)
+  );
 
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', function () {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       this.classList.add('active');
       activeFilter = this.dataset.filter;
+      render();
+    });
+  });
+
+  document.querySelectorAll('.toe-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+      const already = this.classList.contains('active');
+      document.querySelectorAll('.toe-btn').forEach(b => b.classList.remove('active'));
+      if (!already) { this.classList.add('active'); activeToe = this.dataset.toe; }
+      else           { activeToe = null; }
       render();
     });
   });
